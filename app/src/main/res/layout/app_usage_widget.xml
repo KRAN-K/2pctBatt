@@ -1,0 +1,10 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/usage_widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="10dp" android:background="#20242E">
+    <TextView android:id="@+id/usage_widget_title" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="2%POWER • APP USAGE" android:textColor="#FF5252" android:textStyle="bold" android:textSize="11sp"/>
+    <TextView android:id="@+id/usage_widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Top data users • last 24h" android:textColor="#AEB8C8" android:textSize="10sp" android:paddingTop="3dp"/>
+    <TextView android:id="@+id/usage_widget_rows" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Tap to view app usage" android:textColor="#FFFFFF" android:textSize="12sp" android:paddingTop="7dp"/>
+</LinearLayout>
