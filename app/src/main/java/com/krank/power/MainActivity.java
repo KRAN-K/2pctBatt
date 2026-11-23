@@ -2,7 +2,7 @@ package com.krank.power;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.BatteryManager;
+import android.os.BatteryManager;
 import android.content.*;
 import android.graphics.Color;
 import android.os.*;
@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
     }
     private int getTemp(){Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));return i==null?-1:i.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,-1);}
     private String currentInfo(){BatteryManager b=(BatteryManager)getSystemService(BATTERY_SERVICE);long ua=b.getLongProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);return ua==Long.MIN_VALUE?"Not reported":String.format(Locale.US,"%.0f mA",ua/1000.0);}
-    private String cpuInfo(){return "Process CPU "+(Process.getElapsedCpuTime()/1000)+" s since process start";}
+    private String cpuInfo(){return "Process CPU "+(android.os.Process.getElapsedCpuTime()/1000)+" s since process start";}
     private void diagnostic(String title,String status,String advice){LinearLayout box=new LinearLayout(this);box.setOrientation(1);box.setPadding(14,12,14,12);box.setBackgroundColor(card());LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=9;content.addView(box,p);TextView h=text(title+"  •  "+status,15,status.equals("WARNING")?Color.rgb(255,150,50):accent);h.setTypeface(null,1);box.addView(h);TextView d=text(advice,13,fg());d.setPadding(0,6,0,0);box.addView(d);}
     private void button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(fg());b.setBackgroundTintList(android.content.res.ColorStateList.valueOf(card()));b.setAllCaps(false);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=7;content.addView(b,p);b.setOnClickListener(v->action.run());}
     private void setTheme(boolean d){dark=d;getSharedPreferences("prefs",0).edit().putBoolean("dark",d).apply();buildShell();render();}
