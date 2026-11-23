@@ -1,4 +1,5 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="180dp" android:minHeight="90dp" android:updatePeriodMillis="1800000"
-    android:initialLayout="@layout/network_widget" android:resizeMode="horizontal|vertical"
-    android:widgetCategory="home_screen" android:description="@string/network_widget_description"/>
+    android:minWidth="180dp" android:minHeight="90dp" android:minResizeWidth="110dp" android:minResizeHeight="50dp"
+    android:updatePeriodMillis="1800000" android:initialLayout="@layout/network_widget"
+    android:resizeMode="horizontal|vertical" android:widgetCategory="home_screen"
+    android:description="@string/network_widget_description"/>
