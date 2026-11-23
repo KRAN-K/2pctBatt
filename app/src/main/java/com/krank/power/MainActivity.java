@@ -87,10 +87,7 @@ public class MainActivity extends Activity {
             heading("Accent color");
             String[] names={"Red","Blue","Green","Orange","Purple","Cyan"};int[] colors={0xFFFF5252,0xFF448AFF,0xFF4CAF50,0xFFFF9800,0xFFAB47BC,0xFF00BCD4};
             for(int x=0;x<names.length;x++){final int c=colors[x];button(names[x],()->{accent=c;getSharedPreferences("prefs",0).edit().putInt("accent",c).apply();buildShell();render();});}
-            heading("About");sub("2%Power v1.0 • Device monitor
-Battery, RAM, storage, live metrics and diagnostics.
-
-Some readings depend on hardware and Android version. Widgets refresh periodically under Android's system scheduling.");
+            heading("About");sub("2%Power v1.0 • Device monitor\nBattery, RAM, storage, live metrics and diagnostics.\n\nSome readings depend on hardware and Android version. Widgets refresh periodically under Android's system scheduling.");
         }
     }
     private int getTemp(){Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));return i==null?-1:i.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,-1);}
