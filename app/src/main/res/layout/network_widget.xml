@@ -1,0 +1,9 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/network_widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="12dp" android:background="#20232B">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2%POWER • NETWORK" android:textColor="#FF8A65" android:textStyle="bold" android:textSize="11sp"/>
+    <TextView android:id="@+id/network_local_ip" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Local IP: checking…" android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold" android:paddingTop="7dp"/>
+    <TextView android:id="@+id/network_public_ip" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Public IP: checking…" android:textColor="#C8CDD8" android:textSize="12sp" android:paddingTop="3dp"/>
+    <TextView android:id="@+id/network_speed" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Speed: tap to test" android:textColor="#C8CDD8" android:textSize="12sp" android:paddingTop="5dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tap to refresh IPs or run speed test" android:textColor="#FF8A65" android:textSize="10sp" android:paddingTop="5dp"/>
+</LinearLayout>
