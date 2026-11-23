@@ -21,7 +21,7 @@ public class AppUsageWidgetProvider extends AppWidgetProvider {
                 Bundle options=m.getAppWidgetOptions(id);
                 int width=options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH,180);
                 int height=options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT,100);
-                int max=height<90?1:height<140?2:4;
+                int max=(width<170||height<90)?1:height<140?2:4;
                 android.content.SharedPreferences p=c.getSharedPreferences("prefs",0);
                 boolean dark=p.getBoolean("dark",true);int accent=p.getInt("accent",0xFFFF5252);
                 RemoteViews v=new RemoteViews(c.getPackageName(),R.layout.app_usage_widget);
