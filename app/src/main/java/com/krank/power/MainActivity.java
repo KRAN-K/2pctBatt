@@ -32,8 +32,8 @@ public class MainActivity extends Activity {
         TextView brand=text("2%POWER",20,accent);brand.setTypeface(null,1);header.addView(brand,new LinearLayout.LayoutParams(0,-2,1));
         TextView liveTag=text("● LIVE",12,muted());header.addView(liveTag);root.addView(header);
         ScrollView scroll=new ScrollView(this);content=new LinearLayout(this);content.setOrientation(1);content.setPadding(16,8,16,20);scroll.addView(content);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
-        nav=new LinearLayout(this);nav.setPadding(4,8,4,8);nav.setBackgroundColor(card());String[] tabs={"Home","Live","Diagnostics","Settings"};
-        for(String t:tabs){TextView v=text(t,12,muted());v.setGravity(Gravity.CENTER);v.setPadding(4,12,4,12);v.setOnClickListener(w->{page=t.equals("Home")?"Dashboard":t;live=page.equals("Live");handler.removeCallbacks(ticker);if(live)handler.post(ticker);render();});nav.addView(v,new LinearLayout.LayoutParams(0,-2,1));}root.addView(nav);
+        nav=new LinearLayout(this);nav.setPadding(4,8,4,8);nav.setBackgroundColor(card());String[] tabs={"Home","Live","Apps","Diagnostics","Settings"};
+        for(String t:tabs){TextView v=text(t,12,muted());v.setGravity(Gravity.CENTER);v.setPadding(4,12,4,12);v.setOnClickListener(w->{if(t.equals("Apps")){startActivity(new Intent(this,AppUsageActivity.class));return;}page=t.equals("Home")?"Dashboard":t;live=page.equals("Live");handler.removeCallbacks(ticker);if(live)handler.post(ticker);render();});nav.addView(v,new LinearLayout.LayoutParams(0,-2,1));}root.addView(nav);
     }
     private TextView text(String s,int size,int color){TextView t=new TextView(this);t.setText(s);t.setTextSize(size);t.setTextColor(color);return t;}
     private void heading(String s){TextView t=text(s,22,fg());t.setTypeface(null,1);t.setPadding(2,10,2,12);content.addView(t);}
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
             card("Internal storage",gb(s[0]-s[1])+" used",gb(s[1])+" available of "+gb(s[0]),(int)((s[0]-s[1])*100/Math.max(1,s[0])));
             card("Power",batteryState(),"Live electrical current: "+currentInfo(),-1);
             card("CPU",cpuInfo(),"Android-reported app process CPU time; system-wide CPU varies by device.",-1);
-            button("Open Live View",()->{page="Live";live=true;handler.removeCallbacks(ticker);handler.post(ticker);render();});
+            button("Open Live View",()->{page="Live";live=true;handler.removeCallbacks(ticker);handler.post(ticker);render();});\n            button("App power & data usage",()->startActivity(new Intent(this,AppUsageActivity.class)));
         } else if(page.equals("Live")){
             heading("Live monitoring");sub("Refreshes every 2 seconds while this screen is open.");
             card("Battery",bat>=0?bat+"%":"Unavailable",batteryState(),bat);
@@ -86,8 +86,8 @@ public class MainActivity extends Activity {
             button((!dark?"✓ ":"")+"Light theme",()->setTheme(false));
             heading("Accent color");
             String[] names={"Red","Blue","Green","Orange","Purple","Cyan"};int[] colors={0xFFFF5252,0xFF448AFF,0xFF4CAF50,0xFFFF9800,0xFFAB47BC,0xFF00BCD4};
-            for(int x=0;x<names.length;x++){final int c=colors[x];button(names[x],()->{accent=c;getSharedPreferences("prefs",0).edit().putInt("accent",c).apply();buildShell();render();});}
-            heading("About");sub("2%Power v1.0 • Device monitor\nBattery, RAM, storage, live metrics and diagnostics.\n\nSome readings depend on hardware and Android version. Widgets refresh periodically under Android's system scheduling.");
+            for(int x=0;x<names.length;x++){final int c=colors[x];button(names[x],()->{accent=c;getSharedPreferences("prefs",0).edit().putInt("accent",c).apply();refreshWidgets();buildShell();render();});}
+            heading("About");sub("2%Power v1.2 • Device monitor\nBattery, RAM, storage, live metrics and diagnostics.\n\nSome readings depend on hardware and Android version. Widgets refresh periodically under Android's system scheduling.");
         }
     }
     private int getTemp(){Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));return i==null?-1:i.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,-1);}
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
     private String cpuInfo(){return "Process CPU "+(android.os.Process.getElapsedCpuTime()/1000)+" s since process start";}
     private void diagnostic(String title,String status,String advice){LinearLayout box=new LinearLayout(this);box.setOrientation(1);box.setPadding(14,12,14,12);box.setBackgroundColor(card());LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=9;content.addView(box,p);TextView h=text(title+"  •  "+status,15,status.equals("WARNING")?Color.rgb(255,150,50):accent);h.setTypeface(null,1);box.addView(h);TextView d=text(advice,13,fg());d.setPadding(0,6,0,0);box.addView(d);}
     private void button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(fg());b.setBackgroundTintList(android.content.res.ColorStateList.valueOf(card()));b.setAllCaps(false);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=7;content.addView(b,p);b.setOnClickListener(v->action.run());}
-    private void setTheme(boolean d){dark=d;getSharedPreferences("prefs",0).edit().putBoolean("dark",d).apply();buildShell();render();}
+    private void setTheme(boolean d){dark=d;getSharedPreferences("prefs",0).edit().putBoolean("dark",d).apply();refreshWidgets();buildShell();render();}\n    private void refreshWidgets(){PowerWidgetProvider.refresh(this);NetworkWidgetProvider.refresh(this);AppUsageWidgetProvider.refresh(this);}
     @Override protected void onResume(){super.onResume();if(live){handler.removeCallbacks(ticker);handler.post(ticker);}}
     @Override protected void onPause(){super.onPause();handler.removeCallbacks(ticker);}
 }
