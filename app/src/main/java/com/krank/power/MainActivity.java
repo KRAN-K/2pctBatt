@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
     private int fg(){return dark?Color.WHITE:Color.rgb(28,32,40);}
     private int muted(){return dark?Color.rgb(177,185,199):Color.rgb(95,104,118);}
     private void buildShell(){
+        getWindow().setStatusBarColor(bg());getWindow().setNavigationBarColor(bg());
         root=new LinearLayout(this);root.setOrientation(1);root.setBackgroundColor(bg());setContentView(root);
         LinearLayout header=new LinearLayout(this);header.setPadding(20,18,20,12);header.setGravity(Gravity.CENTER_VERTICAL);
         TextView brand=text("2%POWER",20,accent);brand.setTypeface(null,1);header.addView(brand,new LinearLayout.LayoutParams(0,-2,1));
