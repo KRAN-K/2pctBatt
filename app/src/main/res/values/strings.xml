@@ -1,1 +1,1 @@
-<resources><string name="app_name">2%Power</string><string name="widget_description">Battery, RAM and storage at a glance</string></resources>
+<resources><string name="app_name">2%Power</string><string name="widget_description">Battery, RAM and storage at a glance</string><string name="network_widget_description">Local IP, public IP and latest internet speed test</string></resources>
