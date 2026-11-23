@@ -61,7 +61,8 @@ public class MainActivity extends Activity {
             card("Internal storage",gb(s[0]-s[1])+" used",gb(s[1])+" available of "+gb(s[0]),(int)((s[0]-s[1])*100/Math.max(1,s[0])));
             card("Power",batteryState(),"Live electrical current: "+currentInfo(),-1);
             card("CPU",cpuInfo(),"Android-reported app process CPU time; system-wide CPU varies by device.",-1);
-            button("Open Live View",()->{page="Live";live=true;handler.removeCallbacks(ticker);handler.post(ticker);render();});\n            button("App power & data usage",()->startActivity(new Intent(this,AppUsageActivity.class)));
+            button("Open Live View",()->{page="Live";live=true;handler.removeCallbacks(ticker);handler.post(ticker);render();});
+            button("App power & data usage",()->startActivity(new Intent(this,AppUsageActivity.class)));
         } else if(page.equals("Live")){
             heading("Live monitoring");sub("Refreshes every 2 seconds while this screen is open.");
             card("Battery",bat>=0?bat+"%":"Unavailable",batteryState(),bat);
@@ -95,7 +96,8 @@ public class MainActivity extends Activity {
     private String cpuInfo(){return "Process CPU "+(android.os.Process.getElapsedCpuTime()/1000)+" s since process start";}
     private void diagnostic(String title,String status,String advice){LinearLayout box=new LinearLayout(this);box.setOrientation(1);box.setPadding(14,12,14,12);box.setBackgroundColor(card());LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=9;content.addView(box,p);TextView h=text(title+"  •  "+status,15,status.equals("WARNING")?Color.rgb(255,150,50):accent);h.setTypeface(null,1);box.addView(h);TextView d=text(advice,13,fg());d.setPadding(0,6,0,0);box.addView(d);}
     private void button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(fg());b.setBackgroundTintList(android.content.res.ColorStateList.valueOf(card()));b.setAllCaps(false);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=7;content.addView(b,p);b.setOnClickListener(v->action.run());}
-    private void setTheme(boolean d){dark=d;getSharedPreferences("prefs",0).edit().putBoolean("dark",d).apply();refreshWidgets();buildShell();render();}\n    private void refreshWidgets(){PowerWidgetProvider.refresh(this);NetworkWidgetProvider.refresh(this);AppUsageWidgetProvider.refresh(this);}
+    private void setTheme(boolean d){dark=d;getSharedPreferences("prefs",0).edit().putBoolean("dark",d).apply();refreshWidgets();buildShell();render();}
+    private void refreshWidgets(){PowerWidgetProvider.refresh(this);NetworkWidgetProvider.refresh(this);AppUsageWidgetProvider.refresh(this);}
     @Override protected void onResume(){super.onResume();if(live){handler.removeCallbacks(ticker);handler.post(ticker);}}
     @Override protected void onPause(){super.onPause();handler.removeCallbacks(ticker);}
 }
