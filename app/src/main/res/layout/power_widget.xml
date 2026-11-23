@@ -1,0 +1,10 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="10dp" android:background="#20232B">
+    <TextView android:id="@+id/widget_title" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="2%POWER" android:textColor="#FF5B5B" android:textStyle="bold" android:textSize="11sp"/>
+    <TextView android:id="@+id/widget_battery" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Battery --%" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold"/>
+    <TextView android:id="@+id/widget_details" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="RAM -- • Storage --" android:textColor="#C8CDD8" android:textSize="11sp"/>
+</LinearLayout>
